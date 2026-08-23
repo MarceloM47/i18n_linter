@@ -1,0 +1,6 @@
+es:
+  user:
+    greeting: "Hola"
+    farewell: "Adiós"
+  errors:
+    not_found: "No encontrado"
