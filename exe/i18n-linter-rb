@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "i18n_linter_rb"
+
+I18nLinterRb.lint(ARGV)
