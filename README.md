@@ -49,6 +49,7 @@ Usage: i18n-linter-rb [options]
     -p, --path PATH                  Locales directory (default: config/locales)
     -f, --from LOCALE                Source locale (default: en)
     -t, --to LOCALES x,y,z           Target locales (default: es)
+    -i, --init                       Create a default .i18n_linter.yml in the current directory
     -v, --version                    Show version
     -h, --help                       Show this help
 ```
@@ -60,12 +61,14 @@ Examples:
 i18n-linter-rb --path translations/locales
 
 # Compare English against several languages
-i18n-linter-rb --from en --to es fr pt
+i18n-linter-rb --from en --to es,fr,pt
 ```
+
+If you pass `--path` manually and no `.i18n_linter.yml` exists yet, the CLI prints a tip suggesting you persist it with `--init` instead.
 
 ### Configuration file
 
-Create an `.i18n_linter.yml` file in your project root to persist your settings:
+Create an `.i18n_linter.yml` file in your project root to persist your settings. Run `i18n-linter-rb --init` to generate one with the default values, or create it by hand:
 
 ```yaml
 locales_path: config/locales

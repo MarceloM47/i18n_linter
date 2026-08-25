@@ -6,6 +6,7 @@ module I18nLinterRb
     DEFAULT_LOCALES_PATH = "config/locales".freeze
     DEFAULT_SOURCE_LOCALE = "en".freeze
     DEFAULT_TARGET_LOCALES = %w[es].freeze
+    CONFIG_FILE_PATH = ".i18n_linter.yml".freeze
 
     USAGE_GUIDE = <<~GUIDE
 
@@ -17,7 +18,7 @@ module I18nLinterRb
       If your translations live somewhere else, pass the path explicitly:
 
         i18n-linter-rb --path path/to/locales
-        i18n-linter-rb --path path/to/locales --from en --to es fr pt
+        i18n-linter-rb --path path/to/locales --from en --to es,fr,pt
 
       You can also create an .i18n_linter.yml file in your project root:
 
@@ -34,7 +35,10 @@ module I18nLinterRb
 
     def run
       parse_options
+      return create_config_file if @options[:init]
+
       resolve_locales_path
+      warn_about_manual_path
 
       source_path = File.join(@locales_path, "#{@options[:from]}.yml")
       missing = {}
@@ -67,6 +71,10 @@ module I18nLinterRb
           @options[:to] = locales
         end
 
+        opts.on("-i", "--init", "Create a default #{CONFIG_FILE_PATH} in the current directory") do
+          @options[:init] = true
+        end
+
         opts.on("-v", "--version", "Show version") do
           puts I18nLinterRb::VERSION
           exit
@@ -93,12 +101,32 @@ module I18nLinterRb
 
     def load_config
       @load_config ||= begin
-        config_path = ".i18n_linter.yml"
-        File.exist?(config_path) ? YAML.load_file(config_path) : {}
+        File.exist?(CONFIG_FILE_PATH) ? YAML.load_file(CONFIG_FILE_PATH) : {}
       rescue Psych::SyntaxError => e
-        warn("Invalid .i18n_linter.yml: #{e.message}")
+        warn("Invalid #{CONFIG_FILE_PATH}: #{e.message}")
         {}
       end
+    end
+
+    def create_config_file
+      if File.exist?(CONFIG_FILE_PATH)
+        warn("#{CONFIG_FILE_PATH} already exists, not overwriting.")
+        return
+      end
+
+      File.write(CONFIG_FILE_PATH, {
+        "locales_path" => DEFAULT_LOCALES_PATH,
+        "source_locale" => DEFAULT_SOURCE_LOCALE,
+        "target_locales" => DEFAULT_TARGET_LOCALES
+      }.to_yaml)
+
+      puts "Created #{CONFIG_FILE_PATH}"
+    end
+
+    def warn_about_manual_path
+      return unless @options[:path] && !File.exist?(CONFIG_FILE_PATH)
+
+      warn("Tip: run 'i18n-linter-rb --init' to save this path in #{CONFIG_FILE_PATH} instead of passing --path every time.")
     end
 
     def report(missing)
