@@ -97,7 +97,7 @@ ruby -Ilib exe/i18n-linter-rb --help
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/marcelom47/i18n-linter-rb.
+Bug reports and pull requests are welcome on GitHub at https://github.com/MarceloM47/i18n-linter-rb. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and guidelines.
 
 ## License
 

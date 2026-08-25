@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.summary = "Linter for YAML i18n locale files, built for Ruby and Rails projects"
   spec.description = "Detects missing translation keys across locale files. " \
                      "Works out of the box with Rails config/locales and supports custom paths."
-  spec.homepage = "https://github.com/marcelom47/i18n-linter-rb"
+  spec.homepage = "https://github.com/MarceloM47/i18n-linter-rb"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0"
 
