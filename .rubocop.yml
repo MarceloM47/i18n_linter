@@ -1,0 +1,40 @@
+AllCops:
+  TargetRubyVersion: 3.0
+  NewCops: enable
+  Exclude:
+    - "spec/fixtures/**/*"
+
+# The project already consistently uses double-quoted strings.
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# Not worth the churn of adding this comment to every existing file.
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Dev dependencies already live in the gemspec; no reason to move them to the Gemfile.
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+# No public API docs convention in this project.
+Style/Documentation:
+  Enabled: false
+
+# `expect { ... }.to matcher` is the standard RSpec idiom.
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*_spec.rb"
+
+# CLI option-parsing is inherently declarative/verbose.
+Metrics/ClassLength:
+  Exclude:
+    - "lib/i18n_linter_rb/cli.rb"
+Metrics/MethodLength:
+  Exclude:
+    - "lib/i18n_linter_rb/cli.rb"
+Metrics/AbcSize:
+  Exclude:
+    - "lib/i18n_linter_rb/cli.rb"

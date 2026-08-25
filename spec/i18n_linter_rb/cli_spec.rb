@@ -47,8 +47,8 @@ RSpec.describe I18nLinterRb::Cli do
   describe "warning when --path is passed manually" do
     before do
       FileUtils.mkdir_p("my_locales")
-      File.write("my_locales/en.yml", {"en" => {"greeting" => "Hi"}}.to_yaml)
-      File.write("my_locales/es.yml", {"es" => {"greeting" => "Hola"}}.to_yaml)
+      File.write("my_locales/en.yml", { "en" => { "greeting" => "Hi" } }.to_yaml)
+      File.write("my_locales/es.yml", { "es" => { "greeting" => "Hola" } }.to_yaml)
     end
 
     context "when no config file exists" do

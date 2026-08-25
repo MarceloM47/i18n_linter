@@ -8,7 +8,7 @@ module I18nLinterRb
     DEFAULT_TARGET_LOCALES = %w[es].freeze
     CONFIG_FILE_PATH = ".i18n_linter.yml".freeze
 
-    USAGE_GUIDE = <<~GUIDE
+    USAGE_GUIDE = <<~GUIDE.freeze
 
       No locales directory found.
 
@@ -67,7 +67,8 @@ module I18nLinterRb
           @options[:from] = locale
         end
 
-        opts.on("-t", "--to LOCALES x,y,z", Array, "Target locales (default: #{DEFAULT_TARGET_LOCALES.join(',')})") do |locales|
+        opts.on("-t", "--to LOCALES x,y,z", Array,
+                "Target locales (default: #{DEFAULT_TARGET_LOCALES.join(',')})") do |locales|
           @options[:to] = locales
         end
 
@@ -94,9 +95,9 @@ module I18nLinterRb
     def resolve_locales_path
       @locales_path = @options[:path] || load_config["locales_path"] || DEFAULT_LOCALES_PATH
 
-      unless File.directory?(@locales_path)
-        abort(USAGE_GUIDE)
-      end
+      return if File.directory?(@locales_path)
+
+      abort(USAGE_GUIDE)
     end
 
     def load_config
@@ -126,7 +127,7 @@ module I18nLinterRb
     def warn_about_manual_path
       return unless @options[:path] && !File.exist?(CONFIG_FILE_PATH)
 
-      warn("Tip: run 'i18n-linter-rb --init' to save this path in #{CONFIG_FILE_PATH} instead of passing --path every time.")
+      warn("Tip: run 'i18n-linter-rb --init' to save this path in #{CONFIG_FILE_PATH} instead of passing --path.")
     end
 
     def report(missing)

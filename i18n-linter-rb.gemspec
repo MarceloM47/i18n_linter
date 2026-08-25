@@ -15,9 +15,11 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = spec.homepage
 
   spec.add_development_dependency "rspec", "~> 3.13"
+  spec.add_development_dependency "rubocop", "~> 1"
 
   spec.files = Dir["lib/**/*.rb", "exe/*", "LICENSE.txt", "README.md"].compact
   spec.bindir = "exe"
   spec.executables = ["i18n-linter-rb"]
   spec.require_paths = ["lib"]
+  spec.metadata["rubygems_mfa_required"] = "true"
 end
