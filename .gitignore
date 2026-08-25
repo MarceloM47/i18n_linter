@@ -1,4 +1,5 @@
 /.bundle/
+/vendor/
 *.gem
 Gemfile.lock
 .env
